@@ -4,6 +4,22 @@ import numpy as np
 import mediapipe as mp
 from collections import deque
 
+from main import process_frame  # Ensure main.py is in the same directory.
+
+def generate_frames():
+    while True:
+        success, frame = cap.read()
+        if not success:
+            break
+        else:
+            # Process the frame
+            processed_frame = process_frame(frame)
+            ret, buffer = cv2.imencode('.jpg', processed_frame)
+            frame = buffer.tobytes()
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+
 
 bpoints = [deque(maxlen=1024)]
 gpoints = [deque(maxlen=1024)]
@@ -147,3 +163,7 @@ while ret:
 
 cap.release()
 cv2.destroyAllWindows()
+
+def process_frame(frame):
+    # Your Air Canvas frame processing logic here
+    return processed_frame
