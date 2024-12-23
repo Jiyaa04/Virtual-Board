@@ -4,7 +4,7 @@ import numpy as np
 import mediapipe as mp
 from collections import deque
 
-from main import process_frame  # Ensure main.py is in the same directory.
+#from main import process_frame  # Ensure main.py is in the same directory.
 
 def generate_frames():
     while True:
